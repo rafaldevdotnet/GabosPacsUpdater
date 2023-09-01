@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GabosPacsUpdater.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="LocalPathWadoRS" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\GABOS\Services\WadoRS</Value>
+    </Setting>
+    <Setting Name="LocalPathDimse" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\GABOS\Services\Dimse</Value>
+    </Setting>
+    <Setting Name="LocalPathHangfire" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\GABOS\Services\Hangfire</Value>
+    </Setting>
+    <Setting Name="RemotePathWadoRS" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">U:\WadoRS</Value>
+    </Setting>
+    <Setting Name="RemotePathDimse" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">U:\Dimse</Value>
+    </Setting>
+    <Setting Name="RemotePathHangfire" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">U:\Hangfire</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
