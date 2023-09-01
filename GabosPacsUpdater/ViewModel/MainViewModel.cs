@@ -124,7 +124,7 @@ namespace GabosPacsUpdater.ViewModel
         }
         private void UpdatesPacsWadoRS(object obj)
         {
-            UpdatePacsWadoRS = Brushes.Green;
+            
         }
         private void UpdatesPacsDimse(object obj)
         {
