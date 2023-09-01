@@ -12,13 +12,13 @@
       <Value Profile="(Default)">C:\GABOS\Services\Hangfire</Value>
     </Setting>
     <Setting Name="RemotePathWadoRS" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">https://gabospl-my.sharepoint.com/:f:/g/personal/rmajewski_gabos_pl1/Ev2SZgQrYdhDqiGLwI9IoJ4B0a2P26rMAbXU_SWYBghRHQ?e=qrOP8E</Value>
+      <Value Profile="(Default)">U:\WadoRS</Value>
     </Setting>
     <Setting Name="RemotePathDimse" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">https://gabospl-my.sharepoint.com/:f:/g/personal/rmajewski_gabos_pl1/EpZaqAG2lc9HlafQ2T0BUgQBKu6goQZqSYpldDO2Bi9Kpw?e=meDe6r</Value>
+      <Value Profile="(Default)">U:\Dimse</Value>
     </Setting>
     <Setting Name="RemotePathHangfire" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">https://gabospl-my.sharepoint.com/:f:/g/personal/rmajewski_gabos_pl1/EqUT5v4mdp1Im2fCXgiXEuABkMVjimRVH-CHnWyElTcS7g?e=qxYhzq</Value>
+      <Value Profile="(Default)">U:\Hangfire</Value>
     </Setting>
   </Settings>
 </SettingsFile>

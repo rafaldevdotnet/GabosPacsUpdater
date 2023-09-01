@@ -124,7 +124,7 @@ namespace GabosPacsUpdater.ViewModel
         }
         private void UpdatesPacsWadoRS(object obj)
         {
-            
+            UpdateService.UpdatePacsWadoRSAsync(Properties.Settings.Default.RemotePathWadoRS, Properties.Settings.Default.LocalPathWadoRS);
         }
         private void UpdatesPacsDimse(object obj)
         {

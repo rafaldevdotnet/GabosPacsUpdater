@@ -61,8 +61,7 @@ namespace GabosPacsUpdater.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://gabospl-my.sharepoint.com/:f:/g/personal/rmajewski_gabos_pl1/Ev2SZgQrYdhD" +
-            "qiGLwI9IoJ4B0a2P26rMAbXU_SWYBghRHQ?e=qrOP8E")]
+        [global::System.Configuration.DefaultSettingValueAttribute("U:\\WadoRS")]
         public string RemotePathWadoRS {
             get {
                 return ((string)(this["RemotePathWadoRS"]));
@@ -71,8 +70,7 @@ namespace GabosPacsUpdater.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://gabospl-my.sharepoint.com/:f:/g/personal/rmajewski_gabos_pl1/EpZaqAG2lc9H" +
-            "lafQ2T0BUgQBKu6goQZqSYpldDO2Bi9Kpw?e=meDe6r")]
+        [global::System.Configuration.DefaultSettingValueAttribute("U:\\Dimse")]
         public string RemotePathDimse {
             get {
                 return ((string)(this["RemotePathDimse"]));
@@ -81,8 +79,7 @@ namespace GabosPacsUpdater.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://gabospl-my.sharepoint.com/:f:/g/personal/rmajewski_gabos_pl1/EqUT5v4mdp1I" +
-            "m2fCXgiXEuABkMVjimRVH-CHnWyElTcS7g?e=qxYhzq")]
+        [global::System.Configuration.DefaultSettingValueAttribute("U:\\Hangfire")]
         public string RemotePathHangfire {
             get {
                 return ((string)(this["RemotePathHangfire"]));
