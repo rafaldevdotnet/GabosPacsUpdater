@@ -8,7 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="View\GabosMiniaturka.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.ServiceProcess.ServiceController" Version="7.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="View\GabosMiniaturka.png" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,88 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Windows;
 
 namespace GabosPacsUpdater.Model
 {
     public class UpdateService
     {
-        public static void UpdatePacsWadoRSAsync(string sourcePath, string destinationPath)
+        public static void UpdatePacs(string sourcePath, string destinationPath)
         {
             try
             {
-                System.IO.DirectoryInfo dir1 = new System.IO.DirectoryInfo(sourcePath);
-                System.IO.DirectoryInfo dir2 = new System.IO.DirectoryInfo(destinationPath);
+                var dir1 = new DirectoryInfo(sourcePath);
+                var dir2 = new DirectoryInfo(destinationPath);
 
-                IEnumerable<System.IO.FileInfo> list1 = dir1.GetFiles("*.*",
-                System.IO.SearchOption.AllDirectories);
+                var listSource = dir1.GetFiles("*.*", SearchOption.AllDirectories);
+                var listDestination = dir2.GetFiles("*.*", SearchOption.AllDirectories);
 
-                IEnumerable<System.IO.FileInfo> list2 = dir2.GetFiles("*.*",
-                System.IO.SearchOption.AllDirectories);
 
-                bool IsInDestination = false;
-                bool IsInSource = false;
-
-                foreach (System.IO.FileInfo s in list1)
+                var listToCopy = listSource.Where(x => !listDestination.Any(y => y.Name == x.Name && y.LastWriteTime == x.LastWriteTime)).ToList();
+                if (listToCopy.Count != listSource.Count()) listToCopy = listToCopy.Where(x => x.Name != "CommonConfiguration.json").ToList();
+                foreach (var item in listToCopy)
                 {
-                    IsInDestination = true;
-
-                    foreach (System.IO.FileInfo s2 in list2)
-                    {
-                        if (s.Name == s2.Name)
-                        {
-                            IsInDestination = true;
-                            break;
-                        }
-                        else
-                        {
-                            IsInDestination = false;
-                        }
-                    }
-
-                    if (IsInDestination)
-                    {
-                        System.IO.File.Copy(s.FullName, System.IO.Path.Combine(destinationPath, s.Name), true);
-                    }
+                    string catalogDestination = item.FullName.Replace(sourcePath, destinationPath).Replace(item.Name, "");
+                    string fileDestination = item.FullName.Replace(sourcePath, destinationPath);
+                    if (!Directory.Exists(catalogDestination)) Directory.CreateDirectory(catalogDestination);
+                    File.Copy(item.FullName, fileDestination, true);
                 }
 
-                list1 = dir1.GetFiles("*.*", System.IO.SearchOption.AllDirectories);
-
-                list2 = dir2.GetFiles("*.*", System.IO.SearchOption.AllDirectories);
-
-                bool areIdentical = list1.SequenceEqual(list2, new FileCompare());
-
-                if (!areIdentical)
+                var listToDelete = listDestination.Where(x => !listSource.Any(y => y.Name == x.Name)).ToList();
+                foreach (var item in listToDelete)
                 {
-                    foreach (System.IO.FileInfo s in list2)
-                    {
-                        IsInSource = true;
-
-                        foreach (System.IO.FileInfo s2 in list1)
-                        {
-                            if (s.Name == s2.Name)
-                            {
-                                IsInSource = true;
-                                break;
-                            }
-                            else
-                            {
-                                IsInSource = false;
-                            }
-                        }
-
-                        if (!IsInSource)
-                        {
-                            System.IO.File.Copy(s.FullName, System.IO.Path.Combine(sourcePath, s.Name), true);
-                        }
-                    }
+                    File.Delete(item.FullName);
                 }
-
-                Console.WriteLine("Press any key to exit.");
 
             }
             catch (Exception ex)
             {
+                MessageBox.Show(ex.Message, "Błąd podczas aktualizacji");
+            }
+        }
 
+        public static bool IsUpToDate(string sourcePath, string destinationPath)
+        {
+            try
+            {
+                var dir1 = new DirectoryInfo(sourcePath);
+                var dir2 = new DirectoryInfo(destinationPath);
+
+                var listSource = dir1.GetFiles("*.*", SearchOption.AllDirectories);
+                var listDestination = dir2.GetFiles("*.*", SearchOption.AllDirectories);
+
+
+                var listToCopy = listSource.Where(x => !listDestination.Any(y => y.Name == x.Name && y.LastWriteTime == x.LastWriteTime && y.Name != "CommonConfiguration")).ToList();
+                if (listToCopy.Count > 0) return false;
+                else return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Błąd podczas sprawdzania aktualizacji");
                 throw;
             }
         }
