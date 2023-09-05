@@ -17,12 +17,7 @@ namespace GabosPacsUpdater.ViewModel
     {
         public MainViewModel()
         {
-            StatusPacsDimse = Brushes.Gray;
-            StatusPacsWadoRS = Brushes.Gold;
-            StatusPacsHangfire = Brushes.Red;
-            UpdatePacsDimse = Brushes.Red;
-            UpdatePacsWadoRS = Brushes.Red;
-            UpdatePacsHangfire = Brushes.Red;
+            UpdateLight();
 
 
             StopPacsWadoRSCommand = new RelayCommand(StopPacsWadoRS);
@@ -77,6 +72,39 @@ namespace GabosPacsUpdater.ViewModel
         }
 
         #endregion
+        #region Set Light
+        private void StatusLight()
+        {
+
+        }
+        private void UpdateLight()
+        {
+            try
+            {
+                UpdatePacsWadoRS = UpdateService.IsUpToDate(Properties.Settings.Default.RemotePathWadoRS, Properties.Settings.Default.LocalPathWadoRS) ? Brushes.Green : Brushes.Red;
+            }
+            catch 
+            {
+                UpdatePacsWadoRS = Brushes.Gray;
+            }
+            try
+            {
+                UpdatePacsDimse = UpdateService.IsUpToDate(Properties.Settings.Default.RemotePathDimse, Properties.Settings.Default.LocalPathDimse) ? Brushes.Green : Brushes.Red;
+            }
+            catch
+            {
+                UpdatePacsDimse = Brushes.Gray;
+            }
+            try
+            {
+                UpdatePacsHangfire = UpdateService.IsUpToDate(Properties.Settings.Default.RemotePathHangfire, Properties.Settings.Default.LocalPathHangfire) ? Brushes.Green : Brushes.Red;
+            }
+            catch
+            {
+                UpdatePacsHangfire = Brushes.Gray;
+            }
+        }   
+        #endregion
 
         #region Buttons
 
@@ -124,15 +152,15 @@ namespace GabosPacsUpdater.ViewModel
         }
         private void UpdatesPacsWadoRS(object obj)
         {
-            UpdateService.UpdatePacsWadoRSAsync(Properties.Settings.Default.RemotePathWadoRS, Properties.Settings.Default.LocalPathWadoRS);
+            UpdateService.UpdatePacs(Properties.Settings.Default.RemotePathWadoRS, Properties.Settings.Default.LocalPathWadoRS);
         }
         private void UpdatesPacsDimse(object obj)
         {
-            UpdatePacsDimse = Brushes.Green;
+            UpdateService.UpdatePacs(Properties.Settings.Default.RemotePathDimse, Properties.Settings.Default.LocalPathDimse);
         }
         private void UpdatesPacsHangfire(object obj)
         {
-            UpdatePacsHangfire = Brushes.Green;
+            UpdateService.UpdatePacs(Properties.Settings.Default.RemotePathHangfire, Properties.Settings.Default.LocalPathHangfire);
         }
         #endregion
 
