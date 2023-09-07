@@ -49,17 +49,19 @@ namespace GabosPacsUpdater.Model
                 var dir1 = new DirectoryInfo(sourcePath);
                 var dir2 = new DirectoryInfo(destinationPath);
 
-                var listSource = dir1.GetFiles("*.*", SearchOption.AllDirectories);
                 var listDestination = dir2.GetFiles("*.*", SearchOption.AllDirectories);
+                if (listDestination.Count() == 0) throw new Exception("Brak pobranych plików");
+                var listSource = dir1.GetFiles("*.*", SearchOption.AllDirectories);
+                
 
 
                 var listToCopy = listSource.Where(x => !listDestination.Any(y => y.Name == x.Name && y.LastWriteTime == x.LastWriteTime && y.Name != "CommonConfiguration")).ToList();
+                
                 if (listToCopy.Count > 0) return false;
                 else return true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Błąd podczas sprawdzania aktualizacji");
                 throw;
             }
         }

@@ -21,7 +21,7 @@ namespace GabosPacsUpdater.Model
             }
 			catch (Exception ex)
 			{
-                status = ex.Message;
+                status = $"Error: {ex.Message}";
                 return false;
 			}
         }

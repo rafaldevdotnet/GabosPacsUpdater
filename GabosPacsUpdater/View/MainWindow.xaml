@@ -21,6 +21,9 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <Label Content="USŁUGI" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -37,16 +40,20 @@
         <Rectangle Fill="{Binding UpdatePacsDimse}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="2" Height="20" Width="20"/>
         <Rectangle Fill="{Binding UpdatePacsHangfire}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="3" Height="20" Width="20"/>
 
-        <Button Content="Zatrzymaj" Grid.Column="3" Grid.Row="1" Command="{Binding StopPacsWadoRSCommand}" Height="55" VerticalAlignment="Center" Margin="10"/>
-        <Button Content="Zatrzymaj" Grid.Column="3" Grid.Row="2" Command="{Binding StopPacsDimseCommand}"/>
-        <Button Content="Zatrzymaj" Grid.Column="3" Grid.Row="3" Command="{Binding StopPacsHangfireCommand}"/>
+        <Button Content="{Binding ButtonStatusWadoRS}" Grid.Column="3" Grid.Row="1" Command="{Binding StopPacsWadoRSCommand}"/>
+        <Button Content="{Binding ButtonStatusDimse}" Grid.Column="3" Grid.Row="2" Command="{Binding StopPacsDimseCommand}"/>
+        <Button Content="{Binding ButtonStatusHangfire}" Grid.Column="3" Grid.Row="3" Command="{Binding StopPacsHangfireCommand}"/>
 
-        <Button Content="Aktualizuj" Grid.Column="4" Grid.Row="1" Command="{Binding UpdatePacsWadoRSCommand}"/>
-        <Button Content="Aktualizuj" Grid.Column="4" Grid.Row="2" Command="{Binding UpdatePacsDimseCommand}"/>
-        <Button Content="Aktualizuj" Grid.Column="4" Grid.Row="3" Command="{Binding UpdatePacsHangfireCommand}"/>
+        <Button Content="{Binding ButtonUpdateWadoRS}" Grid.Column="4" Grid.Row="1" Command="{Binding UpdatePacsWadoRSCommand}"/>
+        <Button Content="{Binding ButtonUpdateDimse}" Grid.Column="4" Grid.Row="2" Command="{Binding UpdatePacsDimseCommand}"/>
+        <Button Content="{Binding ButtonUpdateHangfire}" Grid.Column="4" Grid.Row="3" Command="{Binding UpdatePacsHangfireCommand}"/>
 
-        <Button Content="Uruchom" Grid.Column="5" Grid.Row="1" Command="{Binding StartPacsWadoRSCommand}"/>
+        <!--<Button Content="Uruchom" Grid.Column="5" Grid.Row="1" Command="{Binding StartPacsWadoRSCommand}"/>
         <Button Content="Uruchom" Grid.Column="5" Grid.Row="2" Command="{Binding StartPacsDimseCommand}"/>
-        <Button Content="Uruchom" Grid.Column="5" Grid.Row="3" Command="{Binding StartPacsHangfireCommand}"/>
+        <Button Content="Uruchom" Grid.Column="5" Grid.Row="3" Command="{Binding StartPacsHangfireCommand}"/>-->
+
+        <ProgressBar Value="24" Minimum="0" Maximum="100" Grid.Row="5" Grid.ColumnSpan="6"/>
+        <Label Content="23 / 100" Grid.Row="5" Grid.ColumnSpan="6" HorizontalContentAlignment="Center"/>
+        <Label Content="Tutaj będzie status kopiowanego pliku" Grid.Row="6" Grid.ColumnSpan="6" HorizontalContentAlignment="Center"/>
     </Grid>
 </Window>
