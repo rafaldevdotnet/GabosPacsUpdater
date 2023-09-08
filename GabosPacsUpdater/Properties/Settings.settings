@@ -12,13 +12,13 @@
       <Value Profile="(Default)">C:\GABOS\Services\Hangfire</Value>
     </Setting>
     <Setting Name="RemotePathWadoRS" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">U:\WadoRS</Value>
+      <Value Profile="(Default)">D:\GABOS\Service\Server</Value>
     </Setting>
     <Setting Name="RemotePathDimse" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">U:\Dimse</Value>
+      <Value Profile="(Default)">D:\GABOS\Service\Dimse</Value>
     </Setting>
     <Setting Name="RemotePathHangfire" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">U:\Hangfire</Value>
+      <Value Profile="(Default)">D:\GABOS\Service\Hangfire</Value>
     </Setting>
   </Settings>
 </SettingsFile>

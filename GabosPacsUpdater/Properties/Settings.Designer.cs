@@ -61,7 +61,7 @@ namespace GabosPacsUpdater.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("U:\\WadoRS")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\GABOS\\Service\\Server")]
         public string RemotePathWadoRS {
             get {
                 return ((string)(this["RemotePathWadoRS"]));
@@ -70,7 +70,7 @@ namespace GabosPacsUpdater.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("U:\\Dimse")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\GABOS\\Service\\Dimse")]
         public string RemotePathDimse {
             get {
                 return ((string)(this["RemotePathDimse"]));
@@ -79,7 +79,7 @@ namespace GabosPacsUpdater.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("U:\\Hangfire")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\GABOS\\Service\\Hangfire")]
         public string RemotePathHangfire {
             get {
                 return ((string)(this["RemotePathHangfire"]));

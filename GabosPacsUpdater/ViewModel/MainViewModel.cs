@@ -16,14 +16,15 @@ namespace GabosPacsUpdater.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        public delegate void UpdateProgressBarDelegate(int value, int max, string status);
         public MainViewModel()
         {
             StopPacsWadoRSCommand = new RelayCommand(StopPacsWadoRS);
             StopPacsDimseCommand = new RelayCommand(StopPacsDimse);
             StopPacsHangfireCommand = new RelayCommand(StopPacsHangfire);
-            StartPacsWadoRSCommand = new RelayCommand(StartPacsWadoRS);
-            StartPacsDimseCommand = new RelayCommand(StartPacsDimse);
-            StartPacsHangfireCommand = new RelayCommand(StartPacsHangfire);
+            //StartPacsWadoRSCommand = new RelayCommand(StartPacsWadoRS);
+            //StartPacsDimseCommand = new RelayCommand(StartPacsDimse);
+            //StartPacsHangfireCommand = new RelayCommand(StartPacsHangfire);
             UpdatePacsWadoRSCommand = new RelayCommand(UpdatesPacsWadoRS);
             UpdatePacsDimseCommand = new RelayCommand(UpdatesPacsDimse);
             UpdatePacsHangfireCommand = new RelayCommand(UpdatesPacsHangfire);
@@ -109,9 +110,9 @@ namespace GabosPacsUpdater.ViewModel
         private void StatusLight()
         {
             string status = "";
-            StatusPacsWadoRS = CommunicationService.CheckStatusServices("GabosPacs", out status)? Brushes.Green: status.Contains("Error: ")? Brushes.Gray : Brushes.Orange;
-            StatusPacsDimse = CommunicationService.CheckStatusServices("GabosPacsDIMSE", out status) ? Brushes.Green : status.Contains("Error: ") ? Brushes.Gray : Brushes.Orange;
-            StatusPacsHangfire = CommunicationService.CheckStatusServices("GabosPacsHangfireWorker", out status) ? Brushes.Green : status.Contains("Error: ") ? Brushes.Gray : Brushes.Orange;
+            StatusPacsWadoRS = CommunicationService.CheckStatusServices("GabosPacs", out status) && !status.Contains("Stop") ? Brushes.Green: status.Contains("Error: ")? Brushes.Gray : Brushes.Orange;
+            StatusPacsDimse = CommunicationService.CheckStatusServices("GabosPacsDIMSE", out status) && !status.Contains("Stop") ? Brushes.Green : status.Contains("Error: ") ? Brushes.Gray : Brushes.Orange;
+            StatusPacsHangfire = CommunicationService.CheckStatusServices("GabosPacsHangfireWorker", out status) && !status.Contains("Stop") ? Brushes.Green : status.Contains("Error: ") ? Brushes.Gray : Brushes.Orange;
         }
         private void UpdateLight()
         {
@@ -313,9 +314,9 @@ namespace GabosPacsUpdater.ViewModel
         public ICommand StopPacsWadoRSCommand { get; set; }
         public ICommand StopPacsDimseCommand { get; set; }
         public ICommand StopPacsHangfireCommand { get; set; }
-        public ICommand StartPacsWadoRSCommand { get; set; }
-        public ICommand StartPacsDimseCommand { get; set; }
-        public ICommand StartPacsHangfireCommand { get; set; }
+        //public ICommand StartPacsWadoRSCommand { get; set; }
+        //public ICommand StartPacsDimseCommand { get; set; }
+        //public ICommand StartPacsHangfireCommand { get; set; }
         public ICommand UpdatePacsWadoRSCommand { get; set; }
         public ICommand UpdatePacsDimseCommand { get; set; }
         public ICommand UpdatePacsHangfireCommand { get; set; }
@@ -326,44 +327,95 @@ namespace GabosPacsUpdater.ViewModel
         private void StopPacsWadoRS(object obj)
         {
             string status = "";
-            if (CommunicationService.StopServices("GabosPacsWadoRS", out status)) StatusPacsWadoRS = Brushes.Red;
+            if (ButtonStatusWadoRS == "Zatrzymaj")
+            {
+                if (CommunicationService.StopServices("GabosPacsServer", out status)) StatusPacsWadoRS = Brushes.Orange;
+                MessageBox.Show(status,"Status");
+            }
+            else if (ButtonStatusWadoRS == "Uruchom")
+            {
+                if (CommunicationService.StartServices("GabosPacsServer", out status)) StatusPacsWadoRS = Brushes.Green;
+                MessageBox.Show(status, "Status");
+            }
+            else if (ButtonStatusWadoRS == "Zainstaluj")
+            {
+                if (CommunicationService.InstallServices("GabosPacsServer", $"{Properties.Settings.Default.LocalPathWadoRS}\\GabosPacs.Blazor.Server.exe", out status)) StatusPacsWadoRS = Brushes.Orange;
+                MessageBox.Show(status, "Status");
+            }
+            
+            StatusLight();
+            SetButtons();
         }
         private void StopPacsDimse(object obj)
         {
             string status = "";
-            if (CommunicationService.StopServices("GabosPacsDIMSE", out status)) StatusPacsDimse = Brushes.Red;
+            if (ButtonStatusDimse == "Zatrzymaj")
+            {
+                if (CommunicationService.StopServices("GabosPacsDIMSE", out status)) StatusPacsDimse = Brushes.Orange;
+                MessageBox.Show(status, "Status");
+            }
+            else if (ButtonStatusDimse == "Uruchom")
+            {
+                if (CommunicationService.StartServices("GabosPacsDIMSE", out status)) StatusPacsDimse = Brushes.Green;
+                MessageBox.Show(status, "Status");
+            }
+            else if (ButtonStatusDimse == "Zainstaluj")
+            {
+                if (CommunicationService.InstallServices("GabosPacsDIMSE", $"{Properties.Settings.Default.LocalPathDimse}\\GabosPacs.Dimse.exe", out status)) StatusPacsDimse = Brushes.Orange;
+                MessageBox.Show(status, "Status");
+            }
+
+            StatusLight();
+            SetButtons();
         }
         private void StopPacsHangfire(object obj)
         {
             string status = "";
-            if (CommunicationService.StopServices("GabosPacsHangfire", out status)) StatusPacsHangfire = Brushes.Red;
+            if (ButtonStatusHangfire == "Zatrzymaj")
+            {
+                if (CommunicationService.StopServices("GabosPacsHangfireWorker", out status)) StatusPacsHangfire = Brushes.Orange;
+                MessageBox.Show(status, "Status");
+            }
+            else if (ButtonStatusHangfire == "Uruchom")
+            {
+                if (CommunicationService.StartServices("GabosPacsHangfireWorker", out status)) StatusPacsHangfire = Brushes.Green;
+                MessageBox.Show(status, "Status");
+            }
+            else if (ButtonStatusHangfire == "Zainstaluj")
+            {
+                if (CommunicationService.InstallServices("GabosPacsHangfireWorker", $"{Properties.Settings.Default.LocalPathHangfire}\\GabosPacs.Hangfire.Worker.exe", out status)) StatusPacsHangfire = Brushes.Orange;
+                MessageBox.Show(status, "Status");
+            }
+
+            StatusLight();
+            SetButtons();
         }
-        private void StartPacsWadoRS(object obj)
-        {
-            string status = "";
-            if (CommunicationService.StartServices("GabosPacsWadoRS", out status)) StatusPacsWadoRS = Brushes.Green;
-        }
-        private void StartPacsDimse(object obj)
-        {
-            string status = "";
-            if (CommunicationService.StartServices("GabosPacsDIMSE", out status)) StatusPacsDimse = Brushes.Green;
-        }
-        private void StartPacsHangfire(object obj)
-        {
-            string status = "";
-            if (CommunicationService.StartServices("GabosPacsHangfire", out status)) StatusPacsHangfire = Brushes.Green;
-        }
+        //private void StartPacsWadoRS(object obj)
+        //{
+        //    string status = "";
+        //    if (CommunicationService.StartServices("GabosPacsWadoRS", out status)) StatusPacsWadoRS = Brushes.Green;
+        //}
+        //private void StartPacsDimse(object obj)
+        //{
+        //    string status = "";
+        //    if (CommunicationService.StartServices("GabosPacsDIMSE", out status)) StatusPacsDimse = Brushes.Green;
+        //}
+        //private void StartPacsHangfire(object obj)
+        //{
+        //    string status = "";
+        //    if (CommunicationService.StartServices("GabosPacsHangfire", out status)) StatusPacsHangfire = Brushes.Green;
+        //}
         private void UpdatesPacsWadoRS(object obj)
         {
-            UpdateService.UpdatePacs(Properties.Settings.Default.RemotePathWadoRS, Properties.Settings.Default.LocalPathWadoRS);
+            Task.Run(() => RunUpdate(Properties.Settings.Default.RemotePathWadoRS, Properties.Settings.Default.LocalPathWadoRS));
         }
         private void UpdatesPacsDimse(object obj)
         {
-            UpdateService.UpdatePacs(Properties.Settings.Default.RemotePathDimse, Properties.Settings.Default.LocalPathDimse);
+            Task.Run(() => RunUpdate(Properties.Settings.Default.RemotePathDimse, Properties.Settings.Default.LocalPathDimse));
         }
         private void UpdatesPacsHangfire(object obj)
         {
-            UpdateService.UpdatePacs(Properties.Settings.Default.RemotePathHangfire, Properties.Settings.Default.LocalPathHangfire);
+            Task.Run(() => RunUpdate(Properties.Settings.Default.RemotePathHangfire, Properties.Settings.Default.LocalPathHangfire));
         }
         private void ToggleSwitch(object obj)
         {
@@ -479,6 +531,24 @@ namespace GabosPacsUpdater.ViewModel
             SetButtons();
             EnabledToggle = true;
             IndicatorActive = false;
+        }
+        private void RunUpdate(string remotePath, string localPath) //TODO: Add ProgressBar and Status Bar
+        {
+            Task.Run(() => IndicatorActive = true);
+            DisabledButtons();
+            ProgresBarVisibility = Visibility.Visible;            
+            UpdateService.UpdatePacs(remotePath, localPath, SetProgressBar);
+            StatusLight();
+            UpdateLight();
+            SetButtons();
+            EnabledToggle = true;
+            IndicatorActive = false;
+        }
+        private void SetProgressBar(int value, int max, string status)
+        {
+            ProgressBarValue = value;
+            ProgressBarMax = max;
+            ProgressBarStatus = status;
         }
         #endregion
 
