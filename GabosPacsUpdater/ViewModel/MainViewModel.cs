@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -26,11 +27,10 @@ namespace GabosPacsUpdater.ViewModel
             UpdatePacsWadoRSCommand = new RelayCommand(UpdatesPacsWadoRS);
             UpdatePacsDimseCommand = new RelayCommand(UpdatesPacsDimse);
             UpdatePacsHangfireCommand = new RelayCommand(UpdatesPacsHangfire);
+            ToggleSwitchCommand = new RelayCommand(ToggleSwitch);
 
-            
-            //StatusLight();
-            //UpdateLight();
-            //SetButtons();
+            ProgresBarVisibility = Visibility.Hidden;
+            EnabledToggle = true;
         }
 
         #region Light
@@ -104,6 +104,7 @@ namespace GabosPacsUpdater.ViewModel
         }
 
         #endregion
+
         #region Set Light
         private void StatusLight()
         {
@@ -211,6 +212,84 @@ namespace GabosPacsUpdater.ViewModel
             }
         }
         #endregion
+
+        #region Enabled
+        private bool _enabledToggle;
+
+        public bool EnabledToggle
+        {
+            get { return _enabledToggle; }
+            set 
+            { 
+                _enabledToggle = value;
+                OnPropertyChanged(nameof(EnabledToggle));
+            }
+        }
+
+        private bool _enabledStatusWadoRS;
+
+        public bool EnabledStatusWadoRS
+        {
+            get { return _enabledStatusWadoRS; }
+            set 
+            { 
+                _enabledStatusWadoRS = value;
+                OnPropertyChanged(nameof(EnabledStatusWadoRS));
+            }
+        }
+        private bool _enabledStatusDimse;
+        public bool EnabledStatusDimse
+        {
+            get { return _enabledStatusDimse; }
+            set
+            {
+                _enabledStatusDimse = value;
+                OnPropertyChanged(nameof(EnabledStatusDimse));
+            }
+        }
+        private bool _enabledStatusHangfire;
+        public bool EnabledStatusHangfire
+        {
+            get { return _enabledStatusHangfire; }
+            set
+            {
+                _enabledStatusHangfire = value;
+                OnPropertyChanged(nameof(EnabledStatusHangfire));
+            }
+        }
+        private bool _enabledUpdateWadoRS;
+        public bool EnabledUpdateWadoRS
+        {
+            get { return _enabledUpdateWadoRS; }
+            set
+            {
+                _enabledUpdateWadoRS = value;
+                OnPropertyChanged(nameof(EnabledUpdateWadoRS));
+            }
+        }
+        private bool _enabledUpdateDimse;
+        public bool EnabledUpdateDimse
+        {
+            get { return _enabledUpdateDimse; }
+            set
+            {
+                _enabledUpdateDimse = value;
+                OnPropertyChanged(nameof(EnabledUpdateDimse));
+            }
+        }
+        private bool _enabledUpdateHangfire;
+        public bool EnabledUpdateHangfire
+        {
+            get { return _enabledUpdateHangfire; }
+            set
+            {
+                _enabledUpdateHangfire = value;
+                OnPropertyChanged(nameof(EnabledUpdateHangfire));
+            }
+        }
+
+        #endregion
+
         #region Set Names
         private void SetButtons()
         {
@@ -220,8 +299,16 @@ namespace GabosPacsUpdater.ViewModel
             ButtonUpdateWadoRS = UpdatePacsWadoRS == Brushes.Gray ? "Pobierz" : UpdatePacsWadoRS == Brushes.Orange ? "Aktualizuj" : "  ...  ";
             ButtonUpdateDimse = UpdatePacsDimse == Brushes.Gray ? "Pobierz" : UpdatePacsDimse == Brushes.Orange ? "Aktualizuj" : "  ...  ";
             ButtonUpdateHangfire = UpdatePacsHangfire == Brushes.Gray ? "Pobierz" : UpdatePacsHangfire == Brushes.Orange ? "Aktualizuj" : "  ...  ";
+
+            EnabledStatusWadoRS = ButtonStatusWadoRS == "  ...  " ? false : true;
+            EnabledStatusDimse = ButtonStatusDimse == "  ...  " ? false : true;
+            EnabledStatusHangfire = ButtonStatusHangfire == "  ...  " ? false : true;
+            EnabledUpdateWadoRS = ButtonUpdateWadoRS == "  ...  " ? false : true;
+            EnabledUpdateDimse = ButtonUpdateDimse == "  ...  " ? false : true;
+            EnabledUpdateHangfire = ButtonUpdateHangfire == "  ...  " ? false : true;
         }
         #endregion
+
         #region Interface Commands
         public ICommand StopPacsWadoRSCommand { get; set; }
         public ICommand StopPacsDimseCommand { get; set; }
@@ -232,7 +319,9 @@ namespace GabosPacsUpdater.ViewModel
         public ICommand UpdatePacsWadoRSCommand { get; set; }
         public ICommand UpdatePacsDimseCommand { get; set; }
         public ICommand UpdatePacsHangfireCommand { get; set; }
+        public ICommand ToggleSwitchCommand { get; set; }
         #endregion
+
         #region Implementation Commands
         private void StopPacsWadoRS(object obj)
         {
@@ -276,11 +365,122 @@ namespace GabosPacsUpdater.ViewModel
         {
             UpdateService.UpdatePacs(Properties.Settings.Default.RemotePathHangfire, Properties.Settings.Default.LocalPathHangfire);
         }
+        private void ToggleSwitch(object obj)
+        {
+            Task.Run(() => Run());
+        }
         #endregion
 
         #endregion
 
+        #region Progress Bar
+        private int _progressBarValue;
 
+        public int ProgressBarValue
+        {
+            get { return _progressBarValue; }
+            set
+            {
+                _progressBarValue = value;
+                ProgressBarContent = $"{value} / {ProgressBarMax}";
+                OnPropertyChanged(nameof(ProgressBarValue));
+            }
+        }
+
+        private int _progressBarMax;
+
+        public int ProgressBarMax
+        {
+            get { return _progressBarMax; }
+            set
+            {
+                _progressBarMax = value;
+                ProgressBarContent = $"{ProgressBarValue} / {value}";
+                OnPropertyChanged(nameof(ProgressBarMax));
+            }
+        }
+        
+        private string _progressBarContent;
+        public string ProgressBarContent
+        {
+            get { return _progressBarContent; }
+            set
+            {
+                _progressBarContent = value;
+                OnPropertyChanged(nameof(ProgressBarContent));
+            }
+        }
+
+        private string _progressBarStatus;
+        public string ProgressBarStatus
+        {
+            get { return _progressBarStatus; }
+            set
+            {
+                _progressBarStatus = value;
+                OnPropertyChanged(nameof(ProgressBarStatus));
+            }
+        }
+
+        private Visibility _progressBarVisibility;
+
+        public Visibility ProgresBarVisibility
+        {
+            get { return _progressBarVisibility; }
+            set 
+            { 
+                _progressBarVisibility = value; 
+                OnPropertyChanged(nameof(ProgresBarVisibility));
+            }
+        }
+
+        private bool _indicatorActive;
+
+        public bool IndicatorActive
+        {
+            get { return _indicatorActive; }
+            set 
+            { 
+                _indicatorActive = value;
+                OnPropertyChanged(nameof(IndicatorActive));
+            }
+        }
+
+        #endregion
+
+        #region Function Helper 
+        private void DisabledButtons()
+        {
+            EnabledToggle = false;
+            EnabledStatusWadoRS = false;
+            EnabledStatusDimse = false;
+            EnabledStatusHangfire = false;
+            EnabledUpdateWadoRS = false;
+            EnabledUpdateDimse = false;
+            EnabledUpdateHangfire = false;
+        }
+        private void EnabledButtons()
+        {
+            EnabledToggle = true;
+            EnabledStatusWadoRS = true;
+            EnabledStatusDimse = true;
+            EnabledStatusHangfire = true;
+            EnabledUpdateWadoRS = true;
+            EnabledUpdateDimse = true;
+            EnabledUpdateHangfire = true;
+        }
+
+        private void Run()
+        {
+            Task.Run(() => IndicatorActive = true);
+            DisabledButtons();
+            StatusLight();
+            UpdateLight();
+            SetButtons();
+            EnabledToggle = true;
+            IndicatorActive = false;
+        }
+        #endregion
 
 
         public event PropertyChangedEventHandler PropertyChanged;
