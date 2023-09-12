@@ -19,6 +19,7 @@ namespace GabosPacsUpdater.ViewModel
         public delegate void UpdateProgressBarDelegate(int value, int max, string status);
         public MainViewModel()
         {
+            //if (!MountDrive.IsMount()) MountDrive.Mount();
             StopPacsWadoRSCommand = new RelayCommand(StopPacsWadoRS);
             StopPacsDimseCommand = new RelayCommand(StopPacsDimse);
             StopPacsHangfireCommand = new RelayCommand(StopPacsHangfire);

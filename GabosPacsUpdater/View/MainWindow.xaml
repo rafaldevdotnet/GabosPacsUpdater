@@ -41,7 +41,7 @@
         <Rectangle Fill="{Binding UpdatePacsDimse}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="2" Height="20" Width="20"/>
         <Rectangle Fill="{Binding UpdatePacsHangfire}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="3" Height="20" Width="20"/>
 
-        <mah:ToggleSwitch Grid.Column="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" Command="{Binding ToggleSwitchCommand}" IsEnabled="{Binding EnabledToggle}"/>
+        <mah:ToggleSwitch Grid.Column="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" OnCommand="{Binding ToggleSwitchCommand}" IsEnabled="{Binding EnabledToggle}"/>
         <Button Content="{Binding ButtonStatusWadoRS}" Grid.Column="3" Grid.Row="1" Command="{Binding StopPacsWadoRSCommand}" IsEnabled="{Binding EnabledStatusWadoRS}"/>
         <Button Content="{Binding ButtonStatusDimse}" Grid.Column="3" Grid.Row="2" Command="{Binding StopPacsDimseCommand}" IsEnabled="{Binding EnabledStatusDimse}"/>
         <Button Content="{Binding ButtonStatusHangfire}" Grid.Column="3" Grid.Row="3" Command="{Binding StopPacsHangfireCommand}" IsEnabled="{Binding EnabledStatusHangfire}"/>
@@ -54,12 +54,19 @@
         <Button Content="Uruchom" Grid.Column="5" Grid.Row="2" Command="{Binding StartPacsDimseCommand}"/>
         <Button Content="Uruchom" Grid.Column="5" Grid.Row="3" Command="{Binding StartPacsHangfireCommand}"/>-->
 
-        <mah:MetroProgressBar Value="{Binding ProgressBarValue}" Minimum="0" Maximum="{Binding ProgressBarMax}" Grid.Row="5" Grid.ColumnSpan="6" Visibility="{Binding ProgresBarVisibility}"/>
+        <mah:MetroProgressBar Value="{Binding ProgressBarValue}" Minimum="0" Maximum="{Binding ProgressBarMax}" Grid.Row="5" Grid.ColumnSpan="6" Visibility="{Binding ProgresBarVisibility}" Foreground="Green"/>
         <Label Content="{Binding ProgressBarContent}" Grid.Row="5" Grid.ColumnSpan="6" HorizontalContentAlignment="Center" Visibility="{Binding ProgresBarVisibility}"/>
         <Label Content="{Binding ProgressBarStatus}" Grid.Row="6" Grid.ColumnSpan="6" HorizontalContentAlignment="Center" Visibility="{Binding ProgresBarVisibility}"/>
 
         
 
         <mah:ProgressRing Foreground="{DynamicResource AccentColorBrush}" Grid.RowSpan ="8" Grid.ColumnSpan="6" IsActive="{Binding IndicatorActive}" />
+
+        <!--<mah:FlyoutsControl>
+            <mah:Flyout x:Name="FirstFlyout" Header="Settings" Position="Right" Width="250">
+                --><!-- The content goes here --><!--
+            </mah:Flyout>
+        </mah:FlyoutsControl>-->
+
     </Grid>
 </mah:MetroWindow>

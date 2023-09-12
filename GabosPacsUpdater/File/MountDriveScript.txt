@@ -1,0 +1,9 @@
+﻿$connectTestResult = Test-NetConnection -ComputerName gabospacs.file.core.windows.net -Port 445
+if ($connectTestResult.TcpTestSucceeded) {
+    # Zapisz hasło, aby utrwalić dysk po ponownym uruchomieniu 
+    cmd.exe /C "cmdkey /add:`"gabospacs.file.core.windows.net`" /user:`"localhost\gabospacs`" /pass:`"7LYE6uTthuOjtpoDjuUEQT/8kJRNNzpn/Bq5wpraBADryoIG9kLuvGivdtMR+t86Vq6o4yktNB8v+ASt23V5+g==`""
+    # Zainstaluj dysk
+    New-PSDrive -Name V -PSProvider FileSystem -Root "\\gabospacs.file.core.windows.net\prod" -Persist
+} else {
+    Write-Error -Message "Unable to reach the Azure storage account via port 445. Check to make sure your organization or ISP is not blocking port 445, or use Azure P2S VPN, Azure S2S VPN, or Express Route to tunnel SMB traffic over a different port."
+}
