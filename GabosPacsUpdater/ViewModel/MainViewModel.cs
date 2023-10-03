@@ -111,7 +111,7 @@ namespace GabosPacsUpdater.ViewModel
         private void StatusLight()
         {
             string status = "";
-            StatusPacsWadoRS = CommunicationService.CheckStatusServices("GabosPacs", out status) && !status.Contains("Stop") ? Brushes.Green: status.Contains("Error: ")? Brushes.Gray : Brushes.Orange;
+            StatusPacsWadoRS = CommunicationService.CheckStatusServices("GabosPacsServer", out status) && !status.Contains("Stop") ? Brushes.Green: status.Contains("Error: ")? Brushes.Gray : Brushes.Orange;
             StatusPacsDimse = CommunicationService.CheckStatusServices("GabosPacsDIMSE", out status) && !status.Contains("Stop") ? Brushes.Green : status.Contains("Error: ") ? Brushes.Gray : Brushes.Orange;
             StatusPacsHangfire = CommunicationService.CheckStatusServices("GabosPacsHangfireWorker", out status) && !status.Contains("Stop") ? Brushes.Green : status.Contains("Error: ") ? Brushes.Gray : Brushes.Orange;
         }
@@ -391,21 +391,6 @@ namespace GabosPacsUpdater.ViewModel
             StatusLight();
             SetButtons();
         }
-        //private void StartPacsWadoRS(object obj)
-        //{
-        //    string status = "";
-        //    if (CommunicationService.StartServices("GabosPacsWadoRS", out status)) StatusPacsWadoRS = Brushes.Green;
-        //}
-        //private void StartPacsDimse(object obj)
-        //{
-        //    string status = "";
-        //    if (CommunicationService.StartServices("GabosPacsDIMSE", out status)) StatusPacsDimse = Brushes.Green;
-        //}
-        //private void StartPacsHangfire(object obj)
-        //{
-        //    string status = "";
-        //    if (CommunicationService.StartServices("GabosPacsHangfire", out status)) StatusPacsHangfire = Brushes.Green;
-        //}
         private void UpdatesPacsWadoRS(object obj)
         {
             Task.Run(() => RunUpdate(Properties.Settings.Default.RemotePathWadoRS, Properties.Settings.Default.LocalPathWadoRS));

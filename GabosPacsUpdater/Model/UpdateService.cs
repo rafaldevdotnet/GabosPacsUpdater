@@ -1,7 +1,10 @@
-﻿using System;
+﻿using ControlzEx.Standard;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.ServiceProcess;
 using System.Threading;
 using System.Windows;
 using static GabosPacsUpdater.ViewModel.MainViewModel;
@@ -14,6 +17,7 @@ namespace GabosPacsUpdater.Model
         {
             try
             {
+                bool updateDataBase = false;
                 int counter = 0;
                 info(counter, 0, $"Rozpoczęcie sprawdzania plików");
                 var dir1 = new DirectoryInfo(sourcePath);
@@ -26,6 +30,7 @@ namespace GabosPacsUpdater.Model
                 var listToCopy = listSource.Where(x => !listDestination.Any(y => y.Name == x.Name && y.LastWriteTime == x.LastWriteTime)).ToList();
                 if (listToCopy.Count != listSource.Count()) listToCopy = listToCopy.Where(x => x.Name != "CommonConfiguration.json").ToList();
                 int max = listToCopy.Count;
+                updateDataBase = destinationPath == Properties.Settings.Default.LocalPathWadoRS && listToCopy.Any(x => x.Name.ToLower().Contains("module"));
                 info(counter, max, $"Rozpoczęcie kopiowania plików do {destinationPath}");
                 Thread.Sleep(3000);
                 foreach (var item in listToCopy)
@@ -51,7 +56,12 @@ namespace GabosPacsUpdater.Model
                     File.Delete(item.FullName);
                 }
                 if (max > 0) info(counter, max, $"Operacje na plikach przebiegły pomyślnie");
-
+                if (updateDataBase)
+                {
+                    info(counter, max, $"Rozpoczynam aktualizację bazy danych.");
+                    UpdateDataBase(destinationPath);
+                    info(counter, max, $"Aktualizacja zakończona.");
+                }
             }
             catch (Exception ex)
             {
@@ -80,6 +90,24 @@ namespace GabosPacsUpdater.Model
             catch (Exception ex)
             {
                 throw;
+            }
+        }
+
+        private static void UpdateDataBase(string path)
+        {
+            string serverPath = $"{path}\\GabosPacs.Blazor.Server.exe";
+            try
+            {
+                ProcessStartInfo info = new ProcessStartInfo(serverPath);
+                info.Arguments = "--updateDatabase [--forceUpdate --silent]";
+                info.UseShellExecute = true;
+                info.Verb = "runas";
+                Process.Start(info).WaitForExit();
+                Thread.Sleep(3000);                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Błąd podczas aktualizacji bazy danych");
             }
         }
     }

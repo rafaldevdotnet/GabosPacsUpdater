@@ -53,7 +53,7 @@
         <!--<Button Content="Uruchom" Grid.Column="5" Grid.Row="1" Command="{Binding StartPacsWadoRSCommand}"/>
         <Button Content="Uruchom" Grid.Column="5" Grid.Row="2" Command="{Binding StartPacsDimseCommand}"/>
         <Button Content="Uruchom" Grid.Column="5" Grid.Row="3" Command="{Binding StartPacsHangfireCommand}"/>-->
-
+       
         <mah:MetroProgressBar Value="{Binding ProgressBarValue}" Minimum="0" Maximum="{Binding ProgressBarMax}" Grid.Row="5" Grid.ColumnSpan="6" Visibility="{Binding ProgresBarVisibility}" Foreground="Green"/>
         <Label Content="{Binding ProgressBarContent}" Grid.Row="5" Grid.ColumnSpan="6" HorizontalContentAlignment="Center" Visibility="{Binding ProgresBarVisibility}"/>
         <Label Content="{Binding ProgressBarStatus}" Grid.Row="6" Grid.ColumnSpan="6" HorizontalContentAlignment="Center" Visibility="{Binding ProgresBarVisibility}"/>
