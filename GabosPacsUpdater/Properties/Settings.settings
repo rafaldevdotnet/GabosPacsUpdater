@@ -20,5 +20,17 @@
     <Setting Name="RemotePathHangfire" Type="System.String" Scope="Application">
       <Value Profile="(Default)">V:\Hangfire</Value>
     </Setting>
+    <Setting Name="PortWadoRS" Type="System.String" Scope="User">
+      <Value Profile="(Default)">5660</Value>
+    </Setting>
+    <Setting Name="PortDimse" Type="System.String" Scope="User">
+      <Value Profile="(Default)">5661</Value>
+    </Setting>
+    <Setting Name="PortHangfire" Type="System.String" Scope="User">
+      <Value Profile="(Default)">5662</Value>
+    </Setting>
+    <Setting Name="ConnectionString" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

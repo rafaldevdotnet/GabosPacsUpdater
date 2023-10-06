@@ -85,5 +85,53 @@ namespace GabosPacsUpdater.Properties {
                 return ((string)(this["RemotePathHangfire"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5660")]
+        public string PortWadoRS {
+            get {
+                return ((string)(this["PortWadoRS"]));
+            }
+            set {
+                this["PortWadoRS"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5661")]
+        public string PortDimse {
+            get {
+                return ((string)(this["PortDimse"]));
+            }
+            set {
+                this["PortDimse"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5662")]
+        public string PortHangfire {
+            get {
+                return ((string)(this["PortHangfire"]));
+            }
+            set {
+                this["PortHangfire"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ConnectionString {
+            get {
+                return ((string)(this["ConnectionString"]));
+            }
+            set {
+                this["ConnectionString"] = value;
+            }
+        }
     }
 }

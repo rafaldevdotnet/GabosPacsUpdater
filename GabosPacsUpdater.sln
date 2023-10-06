@@ -3,18 +3,29 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GabosPacsUpdater", "GabosPacsUpdater\GabosPacsUpdater.csproj", "{10851423-C488-454D-968B-AB67C97CAD18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GabosPacsUpdater", "GabosPacsUpdater\GabosPacsUpdater.csproj", "{10851423-C488-454D-968B-AB67C97CAD18}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "..\gabospacsnew\Common\Common.csproj", "{46BD59E2-7483-4CFA-A168-0FFA150276C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		JkDebug|Any CPU = JkDebug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{10851423-C488-454D-968B-AB67C97CAD18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{10851423-C488-454D-968B-AB67C97CAD18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10851423-C488-454D-968B-AB67C97CAD18}.JkDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10851423-C488-454D-968B-AB67C97CAD18}.JkDebug|Any CPU.Build.0 = Debug|Any CPU
 		{10851423-C488-454D-968B-AB67C97CAD18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10851423-C488-454D-968B-AB67C97CAD18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46BD59E2-7483-4CFA-A168-0FFA150276C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46BD59E2-7483-4CFA-A168-0FFA150276C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46BD59E2-7483-4CFA-A168-0FFA150276C1}.JkDebug|Any CPU.ActiveCfg = JkDebug|Any CPU
+		{46BD59E2-7483-4CFA-A168-0FFA150276C1}.JkDebug|Any CPU.Build.0 = JkDebug|Any CPU
+		{46BD59E2-7483-4CFA-A168-0FFA150276C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46BD59E2-7483-4CFA-A168-0FFA150276C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

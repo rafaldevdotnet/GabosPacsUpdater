@@ -8,6 +8,7 @@ using System.ServiceProcess;
 using System.Threading;
 using System.Windows;
 using static GabosPacsUpdater.ViewModel.MainViewModel;
+using Common;
 
 namespace GabosPacsUpdater.Model
 {
@@ -20,14 +21,20 @@ namespace GabosPacsUpdater.Model
                 bool updateDataBase = false;
                 int counter = 0;
                 info(counter, 0, $"Rozpoczęcie sprawdzania plików");
+                if (!Directory.Exists(destinationPath)) Directory.CreateDirectory(destinationPath);
                 var dir1 = new DirectoryInfo(sourcePath);
                 var dir2 = new DirectoryInfo(destinationPath);
 
                 var listSource = dir1.GetFiles("*.*", SearchOption.AllDirectories);
                 var listDestination = dir2.GetFiles("*.*", SearchOption.AllDirectories);
-                
 
-                var listToCopy = listSource.Where(x => !listDestination.Any(y => y.Name == x.Name && y.LastWriteTime == x.LastWriteTime)).ToList();
+                if (listDestination.Count() == 0 || listDestination.Where(x => x.Name == "CommonConfiguration.json").FirstOrDefault() == null)
+                {
+                    MakeConfigurationJson();
+                    if (File.Exists("CommonConfiguration.json")) File.Copy("CommonConfiguration.json", $"{destinationPath}\\CommonConfiguration.json", true);
+                }
+
+                var listToCopy = listSource.Where(x => !listDestination.Any(y => y.Name == x.Name && y.LastWriteTime == x.LastWriteTime) && x.Name != "CommonConfiguration.json").ToList();
                 if (listToCopy.Count != listSource.Count()) listToCopy = listToCopy.Where(x => x.Name != "CommonConfiguration.json").ToList();
                 int max = listToCopy.Count;
                 updateDataBase = destinationPath == Properties.Settings.Default.LocalPathWadoRS && listToCopy.Any(x => x.Name.ToLower().Contains("module"));
@@ -45,7 +52,7 @@ namespace GabosPacsUpdater.Model
 
                 info(max, max, $"Status: Kopiowanie plików zakończono pomyślnie");
                 Thread.Sleep(3000);
-                var listToDelete = listDestination.Where(x => !listSource.Any(y => y.Name == x.Name)).ToList();
+                var listToDelete = listDestination.Where(x => !listSource.Any(y => y.Name == x.Name) && x.Name != "CommonConfiguration.json").ToList();
                 max = listToDelete.Count;
                 counter = 0;
                 if (max > 0) info(counter, max, $"Rozpoczęcie usuwania niepotrzebnych plików z {destinationPath}");
@@ -109,6 +116,16 @@ namespace GabosPacsUpdater.Model
             {
                 MessageBox.Show($"Error: {ex.Message}", "Błąd podczas aktualizacji bazy danych");
             }
+        }
+
+        private static void MakeConfigurationJson()
+        {
+            CommonKonfiguracja.CheckIfExist();
+            CommonKonfiguracja.SetParameter(nameof(CommonKonfiguracja.ConnectionString), Properties.Settings.Default.ConnectionString);
+            CommonKonfiguracja.SetParameter(nameof(CommonKonfiguracja.DicomServerGabosPacsUrl), $"http://*:{Properties.Settings.Default.PortWadoRS}");
+            CommonKonfiguracja.SetParameter(nameof(CommonKonfiguracja.PacsPort), Properties.Settings.Default.PortDimse);
+            CommonKonfiguracja.SetParameter(nameof(CommonKonfiguracja.HangfireUrl), $"http://*:{Properties.Settings.Default.PortHangfire}");
+            CommonKonfiguracja.SetParameter(nameof(CommonKonfiguracja.Developer), "false");
         }
     }
 

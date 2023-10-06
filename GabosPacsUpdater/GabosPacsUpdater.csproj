@@ -18,6 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\gabospacsnew\Common\Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="View\GabosMiniaturka.png" />
   </ItemGroup>
 

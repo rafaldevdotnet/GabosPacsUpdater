@@ -30,6 +30,7 @@ namespace GabosPacsUpdater.ViewModel
             UpdatePacsDimseCommand = new RelayCommand(UpdatesPacsDimse);
             UpdatePacsHangfireCommand = new RelayCommand(UpdatesPacsHangfire);
             ToggleSwitchCommand = new RelayCommand(ToggleSwitch);
+            UstawieniaCommand = new RelayCommand(Ustawienia);
 
             ProgresBarVisibility = Visibility.Hidden;
             EnabledToggle = true;
@@ -220,7 +221,7 @@ namespace GabosPacsUpdater.ViewModel
 
         public bool EnabledToggle
         {
-            get { return _enabledToggle; }
+            get { if (string.IsNullOrEmpty(Properties.Settings.Default.ConnectionString)) return false; else return _enabledToggle; }
             set 
             { 
                 _enabledToggle = value;
@@ -322,6 +323,7 @@ namespace GabosPacsUpdater.ViewModel
         public ICommand UpdatePacsDimseCommand { get; set; }
         public ICommand UpdatePacsHangfireCommand { get; set; }
         public ICommand ToggleSwitchCommand { get; set; }
+        public ICommand UstawieniaCommand { get; set; }
         #endregion
 
         #region Implementation Commands
@@ -407,6 +409,10 @@ namespace GabosPacsUpdater.ViewModel
         {
             Task.Run(() => Run());
         }
+        private void Ustawienia(object obj)
+        {
+            FlyoutIsOpen = true;
+        }
         #endregion
 
         #endregion
@@ -481,6 +487,94 @@ namespace GabosPacsUpdater.ViewModel
             { 
                 _indicatorActive = value;
                 OnPropertyChanged(nameof(IndicatorActive));
+            }
+        }
+
+        #endregion
+
+        #region Flyout
+        public string KatalogWadoRS 
+        {
+            get { return Properties.Settings.Default.LocalPathWadoRS; }
+            set 
+            {
+                Properties.Settings.Default.LocalPathWadoRS = value;
+                Properties.Settings.Default.Save();
+                OnPropertyChanged(nameof(KatalogWadoRS));
+            }
+        }
+        public string KatalogDimse
+        {
+            get { return Properties.Settings.Default.LocalPathDimse; }
+            set
+            {
+                Properties.Settings.Default.LocalPathDimse = value;
+                Properties.Settings.Default.Save();
+                OnPropertyChanged(nameof(KatalogDimse));
+            }
+        }
+        public string KatalogHangfire
+        {
+            get { return Properties.Settings.Default.LocalPathHangfire; }
+            set
+            {
+                Properties.Settings.Default.LocalPathHangfire = value;
+                Properties.Settings.Default.Save();
+                OnPropertyChanged(nameof(KatalogHangfire));
+            }
+        }
+
+        public string PortWadoRS
+        {
+            get { return Properties.Settings.Default.PortWadoRS; }
+            set
+            {
+                Properties.Settings.Default.PortWadoRS = value;
+                Properties.Settings.Default.Save();
+                OnPropertyChanged(nameof(PortWadoRS));
+            }
+        }
+        public string PortDimse
+        {
+            get { return Properties.Settings.Default.PortDimse; }
+            set
+            {
+                Properties.Settings.Default.PortDimse = value;
+                Properties.Settings.Default.Save();
+                OnPropertyChanged(nameof(PortDimse));
+            }
+        }
+        public string PortHangfire
+        {
+            get { return Properties.Settings.Default.PortHangfire; }
+            set
+            {
+                Properties.Settings.Default.PortHangfire = value;
+                Properties.Settings.Default.Save();
+                OnPropertyChanged(nameof(PortHangfire));
+            }
+        }
+        public string ConnectionString
+        {
+            get { return Properties.Settings.Default.ConnectionString; }
+            set
+            {
+                Properties.Settings.Default.ConnectionString = value;
+                Properties.Settings.Default.Save();
+                EnabledToggle = true;
+                OnPropertyChanged(nameof(ConnectionString));
+            }
+        }
+
+        private bool _flyoutIsOpen;
+
+        public bool FlyoutIsOpen
+        {
+            get { return _flyoutIsOpen; }
+            set 
+            { 
+                _flyoutIsOpen = value; 
+                OnPropertyChanged(nameof(FlyoutIsOpen));
             }
         }
 
